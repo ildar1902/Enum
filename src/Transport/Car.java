@@ -24,20 +24,41 @@ public class Car extends Transport implements Competing {
         }
     }
 
+    public enum TransportType {
+        CAR("Легковой автомобиль");
+        private final String typeName;
 
-    private Body bodyType;
+        TransportType(String typeName) {
+            this.typeName = typeName;
+        }
+        public String getTypeName() {
+            return typeName;
+        }
+    }
+    private final TransportType transportType;
+    private final Body bodyType;
 
-    public Car(String brand, String model, double engineVolume, Body bodyType) {
+    public Car(TransportType transportType, String brand, String model, double engineVolume, Body bodyType) {
         super(brand, model, engineVolume);
         this.bodyType = bodyType;
+        this.transportType = transportType;
     }
 
     public Body getBodyType() {
         return bodyType;
     }
 
-    public void setBodyType(Body bodyType) {
-        this.bodyType = bodyType;
+    public TransportType getTransportType() {
+        return transportType;
+    }
+
+    @Override
+    public void printType() {
+        if (transportType != null) {
+            System.out.println("Тип транспортного средства: " + transportType.getTypeName());
+        } else {
+            System.out.println("По транспортному средству недостаточно данных!!!");
+        }
     }
 
     @Override

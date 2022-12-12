@@ -39,21 +39,46 @@ public class Bus extends Transport implements Competing {
                 return "до " + max + " мест";
             }
             return min + "-" + max + " мест";
-
         }
     }
+public enum TransportType {
+    BUS("Автобус");
+    private final String typeName;
+    TransportType(String typeName) {
+        this.typeName = typeName;
+    }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    @Override
+    public String toString() {
+        return typeName;
+    }
+}
     private Capacity capacity;
+    private final TransportType transportType;
 
-    public Bus(String brand, String model, double engineVolume, Capacity capacity) {
+    public Bus(TransportType transportType, String brand, String model, double engineVolume, Capacity capacity) {
         super(brand, model, engineVolume);
         this.capacity = capacity;
+//        if (transportType != null) {
+            this.transportType = transportType;
+//        } else {
+//            this.transportType = TransportType.BUS;
+//        }
+
     }
 
-
-    public Bus(String brand, String model, double engineVolume) {
-        super(brand, model, engineVolume);
-    }
+    @Override
+    public void printType() {
+        if (transportType != null) {
+            System.out.println("Тип транспортного средства: " + transportType.getTypeName());
+        } else {
+            System.out.println("По транспортному средству недостаточно данных!!!");
+        }
+            }
 
     @Override
     public void start() {
@@ -91,8 +116,14 @@ public class Bus extends Transport implements Competing {
         this.capacity = capacity;
     }
 
+    public TransportType getTransportType() {
+        return transportType;
+    }
+
     @Override
     public String toString() {
-        return "Автобус \"" + getBrand() + "\" \"" + getModel() +  "\", Вместимость: " + capacity.toString();
+        return transportType.toString() + " \"" + getBrand() + "\" \""
+                + getModel() +  "\", Вместимость: " + capacity.toString();
     }
+
 }

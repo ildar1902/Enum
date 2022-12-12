@@ -3,10 +3,11 @@ package Transport;
 
 public class Truck extends Transport implements Competing {
     public enum LoadCapacity {
-        N1(null, 3.5f), N2(3.5f,12f ), N3(12f, null);
+        N1(null, 3.5f), N2(3.5f, 12f), N3(12f, null);
 
         Float min;
         Float max;
+
         LoadCapacity(Float min, Float max) {
             this.min = min;
             this.max = max;
@@ -28,6 +29,7 @@ public class Truck extends Transport implements Competing {
             this.max = max;
         }
 
+
         @Override
         public String toString() {
             if (min == null)
@@ -37,18 +39,35 @@ public class Truck extends Transport implements Competing {
             }
             return "от " + min + " тонн до " + max + " тонн";
         }
+    }
+    public enum TransportType {
+        TRUCK("Грузовик");
+        private final String typeName;
+
+        TransportType(String typeName) {
+            this.typeName = typeName;
         }
-
-
+        public String getTypeName() {
+            return typeName;
+        }
+    }
+    private final TransportType transportType;
     private LoadCapacity loadCapacity;
 
-    public Truck(String brand, String model, double engineVolume, LoadCapacity loadCapacity) {
+    public Truck(TransportType transportType, String brand, String model, double engineVolume, LoadCapacity loadCapacity) {
         super(brand, model, engineVolume);
         this.loadCapacity = loadCapacity;
+        this.transportType = transportType;
+
     }
 
-    public Truck(String brand, String model, double engineVolume) {
-        super(brand, model, engineVolume);
+    @Override
+    public void printType() {
+        if (transportType != null) {
+            System.out.println("Тип транспортного средства: " + transportType.getTypeName());
+        } else {
+            System.out.println("По транспортному средству недостаточно данных!!!");
+        }
     }
 
     public LoadCapacity getLoadCapacity() {
@@ -57,6 +76,10 @@ public class Truck extends Transport implements Competing {
 
     public void setLoadCapacity(LoadCapacity loadCapacity) {
         this.loadCapacity = loadCapacity;
+    }
+
+    public TransportType getTransportType() {
+        return transportType;
     }
 
     @Override
